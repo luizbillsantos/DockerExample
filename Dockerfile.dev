@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:3.1
+RUN mkdir /app
+WORKDIR /app/
+COPY mvc.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish -c Release -o dist
+LABEL version="1.1" description="APP Net Core"
+ENV ASPNETCORE_URLS=http://+:80 
+EXPOSE 80/tcp
+ENTRYPOINT ["dotnet", "dist/mvc.dll"]
+
